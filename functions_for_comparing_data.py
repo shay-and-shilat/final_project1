@@ -26,26 +26,29 @@ def headbend_vs_majority(headband_files, psg_files):
         logging.error(f"Error reading files: {e}")
         return None
 
-    dis_mask = (experts_file['majority'] != 8)
+    no_data_collected_from_headband = -2
+    value_representing_awake_stage = 8
+    dis_mask = (experts_file['majority'] != value_representing_awake_stage)
     experts_file = experts_file[dis_mask].reset_index(drop=True)
     ai_file = ai_file[dis_mask].reset_index(drop=True)
 
     file_id = os.path.basename(headband_files).split("_")[0]
-    ai_error = ai_file['ai_hb'] == -2
+    ai_error = ai_file['ai_hb'] == no_data_collected_from_headband
     error_pr = (ai_error.sum() / len(ai_file)) * 100
 
     if error_pr >= 40:
         logging.warning("Error rate is too high, skipping comparison.")
         return None
 
-    mis_mask = (ai_file['ai_hb'] != -2)
+
+    mis_mask = (ai_file['ai_hb'] != no_data_collected_from_headband)
     experts_file = experts_file[mis_mask].reset_index(drop=True)
     ai_file = ai_file[mis_mask].reset_index(drop=True)
 
     hb_vs_maj = ai_file['ai_hb'] == experts_file['majority']
     precent_match = (hb_vs_maj.sum() / len(hb_vs_maj)) * 100
 
-    logging.info(f"Comparison completed. Percentage match for patient {file_id}: {precent_match}%")
+    logging.info(f"Comparison completed. Percentage match for patient {file_id}: {round(precent_match, 2)}%")
     return precent_match
 
 # Function to compare PSG AI scoring with the majority expert scoring
@@ -67,13 +70,14 @@ def aispg_vs_majority(psg_files):
         logging.error(f"Error reading file: {e}")
         return None
 
-    mask = (psg_file['majority'] != 8)
+    value_representing_awake_stage = 8
+    mask = (psg_file['majority'] != value_representing_awake_stage)
     psg_file = psg_file[mask].reset_index(drop=True)
 
 
     file_number = os.path.basename(psg_files).split("_")[0]
     aipsg_vs_maj = psg_file['ai_psg'] == psg_file['majority']
-    precent_match = (aipsg_vs_maj.sum() / len(psg_file)) * 100
+    precent_match = (aipsg_vs_maj.sum() / len(psg_file)) * 100 #multiplying the result by 100 to find its precentage.
     
-    logging.info(f"PSG AI comparison completed. Percentage match for patient {file_number}: {precent_match}%")
+    logging.info(f"PSG AI comparison completed. Percentage match for patient {file_number}: {round(precent_match, 2)}%")
     return precent_match
