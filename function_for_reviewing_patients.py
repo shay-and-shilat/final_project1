@@ -1,6 +1,10 @@
 import re
 import os
+import logging
 from creating_plots import plot_sleep_stages
+
+# Set up logging configuration
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def review_subjects(headband_files, psg_files):
     """
@@ -15,7 +19,7 @@ def review_subjects(headband_files, psg_files):
         while True:
             subject_id_input = input("Please enter a subject number: ").strip()  # Strip any extra spaces
 
-            print(f"Looking for subject number: '{subject_id_input}'")
+            logging.info(f"Looking for subject number: '{subject_id_input}'")
 
             # Check if the input matches any of the headband files
             matching_headband_file = None
@@ -45,12 +49,12 @@ def review_subjects(headband_files, psg_files):
 
             if matching_headband_file and matching_psg_file:
                 # If both files are found, plot the sleep stages
-                print(f"Found matching files for subject {subject_id_input}. Displaying plots...")
+                logging.info(f"Found matching files for subject {subject_id_input}. Displaying plots...")
                 plot_sleep_stages([matching_psg_file], [matching_headband_file])
                 break  # Exit the loop after plotting
             else:
                 # If no matching files, prompt the user again
-                print(f"The subject number you entered doesn't exist, please enter a new subject number.")
+                logging.warning(f"The subject number you entered doesn't exist, please enter a new subject number.")
         
         # Ask if the user wants to review another subject's data
         while True:
@@ -59,7 +63,7 @@ def review_subjects(headband_files, psg_files):
             if review_another == 'y':
                 break  # Continue to the next iteration and ask for a new subject number
             elif review_another == 'n':
-                print("Exiting the program.")
+                logging.info("Exiting the program.")
                 exit()  # Exit the program
             else:
-                print("Invalid input. Please enter 'y' to review another subject or 'n' to exit.")
+                logging.warning("Invalid input. Please enter 'y' to review another subject or 'n' to exit.")

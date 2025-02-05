@@ -4,6 +4,10 @@ import random
 import pandas as pd
 import os
 import numpy as np
+import logging
+
+# Set up logging configuration
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 # Function to plot sleep stages over time with different colors for each sleep stage
@@ -28,7 +32,7 @@ def plot_sleep_stages(psg_files, headband_files, colormap='viridis', title=None)
     
     # Ensure there is data for both 'onset' and 'majority'
     if len(onset) == 0 or len(majority) == 0 or len(ai_psg) == 0:
-        print(f"Warning: No data found in {random_psg_file}. Skipping plot.")
+        logging.warning(f"No data found in {psg_files}. Skipping plot.")
         return
     
     # Create a color map to represent the stages
@@ -39,7 +43,7 @@ def plot_sleep_stages(psg_files, headband_files, colormap='viridis', title=None)
     if len(majority) > 0:
         colors = [cmap(norm(stage)) for stage in majority]  # Assign color for each stage
     else:
-        print(f"Warning: No valid majority values in {random_psg_file}. Skipping plot.")
+        logging.warning(f"No valid majority values in {psg_files}. Skipping plot.")
         return
     
     # Extract subject ID from the filename (assuming the subject ID is the first part of the filename)
@@ -53,7 +57,7 @@ def plot_sleep_stages(psg_files, headband_files, colormap='viridis', title=None)
             break
     
     if headband_file is None:
-        print(f"Warning: No corresponding headband file found for {subject_id}. Skipping plot.")
+        logging.warning(f"No corresponding headband file found for {subject_id}. Skipping plot.")
         return
 
     # Read the headband file to get the 'ai_hb' sleep stages

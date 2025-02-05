@@ -1,5 +1,8 @@
-
+import logging
 import os
+
+# Set up logging configuration
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Function to find event files within the provided base folder
 def find_event_files(base_folder):
@@ -17,7 +20,7 @@ def find_event_files(base_folder):
 
     # Check if base_folder exists and is a valid directory
     if not os.path.isdir(base_folder):
-        print(f"Error: '{base_folder}' is not a valid directory.")
+        logging.error(f"'{base_folder}' is not a valid directory.")
         return headband_files, psg_files
 
     # Iterate through each subfolder in the base folder, if the subfolder is a valid directory, the function will add the subfolder name "eeg" to the folder path
