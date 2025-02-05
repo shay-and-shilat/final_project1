@@ -152,8 +152,7 @@ def plot_sleep_stages_over_time(psg_files, headband_files, colormap='viridis', t
     title (str): Optional title for the plot. If None, it will use the subject's ID.
     """
     # Select a random PSG file from the list
-    random_psg_file = random.choice(psg_files)
-    psg_data = pd.read_csv(random_psg_file, sep="\t")
+    psg_data = pd.read_csv(psg_files, sep="\t")
     
     # Extract time and sleep stages from the PSG data
     onset = psg_data['onset']  # Time in 30-second epochs
@@ -162,7 +161,7 @@ def plot_sleep_stages_over_time(psg_files, headband_files, colormap='viridis', t
     
     # Ensure there is data for both 'onset' and 'majority'
     if len(onset) == 0 or len(majority) == 0 or len(ai_psg) == 0:
-        print(f"Warning: No data found in {random_psg_file}. Skipping plot.")
+        print(f"Warning: No data found in {psg_files}. Skipping plot.")
         return
     
     # Create a color map to represent the stages
@@ -173,11 +172,11 @@ def plot_sleep_stages_over_time(psg_files, headband_files, colormap='viridis', t
     if len(majority) > 0:
         colors = [cmap(norm(stage)) for stage in majority]  # Assign color for each stage
     else:
-        print(f"Warning: No valid majority values in {random_psg_file}. Skipping plot.")
+        print(f"Warning: No valid majority values in {psg_files}. Skipping plot.")
         return
     
     # Extract subject ID from the filename (assuming the subject ID is the first part of the filename)
-    subject_id = os.path.basename(random_psg_file).split("_")[0]
+    subject_id = os.path.basename(psg_files).split("_")[0]
     
     # Find the corresponding headband file for the subject
     headband_file = None
