@@ -1,7 +1,7 @@
 import re
 import os
 import logging
-from creating_plots import plot_sleep_stages
+from files_for_python_project.creating_plots import plot_sleep_stages
 
 # Set up logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

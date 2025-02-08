@@ -1,0 +1,27 @@
+#python_project.toml
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Sleep_Analysis-AI_vs_Experts"
+version = "1.0.0"
+description = "this project is ment to help researchers analyse the data gathered by a "at home" eeg headband ment to analyse sleep stages during the night and comparing it to the golden standard sleep analysing method"
+authors = [
+    { name = "shay", email = "shaymisgav1@gmail.com"}
+    { name = "shilat", email = "ahka234@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13.0"
+dependencies = [
+    "numpy==2.2.0",
+    "pandas==2.2.3",
+    "matplotlib==3.10.0",
+]
+
+[tool.setuptools]
+packages = ["files_for_python_project"] #a folder that contains all data collected from patients as well as all functions used in the project
+
+[tool.setuptools.scripts]
+all = "all:main" 

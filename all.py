@@ -5,11 +5,11 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 #importing the needed functions from different files.
-from find_file_function import find_event_files
-from functions_for_comparing_data import headbend_vs_majority , aispg_vs_majority
-from error_counts_and_full_sleep_functions import error_houers_count , total_sleeping_hours
-from creating_plots import plot_sleep_stages
-from function_for_reviewing_patients import review_subjects
+from files_for_python_project.find_file_function import find_event_files
+from files_for_python_project.functions_for_comparing_data import headbend_vs_majority , aispg_vs_majority
+from files_for_python_project.error_counts_and_full_sleep_functions import error_houers_count , total_sleeping_hours
+from files_for_python_project.creating_plots import plot_sleep_stages
+from files_for_python_project.function_for_reviewing_patients import review_subjects
 
 # Main script execution
 logging.info("Starting main script...")

@@ -93,3 +93,9 @@ def plot_sleep_stages(psg_files, headband_files, colormap='viridis', title=None)
 
     plt.tight_layout()
     plt.show()
+
+    
+    
+    
+print(pd.__version__)
+print(np.__version__)
