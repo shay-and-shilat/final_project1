@@ -9,7 +9,7 @@ name = "Sleep_Analysis-AI_vs_Experts"
 version = "1.0.0"
 description = "this project is ment to help researchers analyse the data gathered by a "at home" eeg headband ment to analyse sleep stages during the night and comparing it to the golden standard sleep analysing method"
 authors = [
-    { name = "shay", email = "shaymisgav1@gmail.com"}
+    { name = "shay", email = "shaymisgav1@gmail.com"},
     { name = "shilat", email = "ahka234@gmail.com"}
 ]
 readme = "README.md"
