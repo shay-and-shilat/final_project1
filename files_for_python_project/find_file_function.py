@@ -23,7 +23,7 @@ def find_event_files(base_folder):
         logging.error(f"'{base_folder}' is not a valid directory.")
         return headband_files, psg_files
 
-    # Iterate through each subfolder in the base folder, if the subfolder is a valid directory, the function will add the subfolder name "eeg" to the folder path
+    # Iterate through each subfolder in the base folder
     for entry in os.scandir(base_folder):
         if entry.is_dir():
             eeg_folder_path = os.path.join(entry.path, "eeg")
@@ -40,13 +40,18 @@ def find_event_files(base_folder):
                         elif file_entry.name.endswith("psg_events.tsv"):
                             psg_file = file_entry.path
 
-                    # If both files are found, exit loop early
-                    if headband_file and psg_file:
-                        break
-
-                # Only add files if BOTH are found
+                # Only add files if BOTH headband and PSG are found (complete pair)
                 if headband_file and psg_file:
                     headband_files.append(headband_file)
                     psg_files.append(psg_file)
-
+                elif headband_file:
+                    # Log missing PSG file for this headband entry
+                    logging.warning(f"Missing PSG file for {headband_file}. Skipping.")
+                elif psg_file:
+                    # Log missing headband file for this PSG entry
+                    logging.warning(f"Missing headband file for {psg_file}. Skipping.")
+                else:
+                    # Log missing files (both headband and PSG)
+                    logging.warning(f"No valid event files in {eeg_folder_path}. Skipping.")
+                
     return headband_files, psg_files
